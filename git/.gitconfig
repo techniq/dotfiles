@@ -1,0 +1,52 @@
+[user]
+	name = Sean Lynch
+	email = techniq35@gmail.com
+
+[core]
+	excludesfile = ~/.gitignore
+	autocrlf = input
+    # whitespace = cr-at-eol
+
+[branch]
+	autosetuprebase = always
+
+[color]
+	ui = true
+
+[alias]
+    st = status -sb
+	l = log
+	lg = log --graph
+    lga = log --graph --all
+    lgs = log --graph --all --stat
+    lgp = log --graph --all -p
+    w = whatchanged --graph --abbrev-commit --date=relative --all
+    amend = commit --amend -C HEAD
+    # unstage = reset HEAD
+    # uncommit = reset HEAD^
+
+[log]
+	decorate = true
+
+[format]
+	pretty = %C(yellow)%h%C(reset)%C(red)%d%C(reset) %s %C(bold blue)<%an> %C(green)(%cr)%C(reset)  
+
+[merge]
+	tool = gvimdiff
+
+[difftool "gvimdiff"]
+	path = /usr/local/bin/mvimdiff
+
+[mergetool "gvimdiff"]
+	path = /usr/local/bin/mvimdiff
+
+[diff]
+	tool = gvimdiff
+
+[difftool "sourcetree"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path = 
+
+[mergetool "sourcetree"]
+	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true
