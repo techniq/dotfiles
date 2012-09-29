@@ -17,13 +17,21 @@
     st = status -sb
 	l = log
 	lg = log --graph
-    lga = log --graph --all
-    lgs = log --graph --all --stat
-    lgp = log --graph --all -p
+    lga = !git lg --all
+    lgs = !git lga --stat
+    lgp = !git lga -p
+    in = !git lga ..FETCH_HEAD
+    incoming = !git fetch; !git in
+    # incoming = !git fetch; git lga ..@{u}
+    outgoing = !git lga @{u}..
+
+    # Shows all commits that are in any of local branches but not in any of remote tracking branches for origin (what you have that origin doesn’t).
+    unpushed = !git lga --branches --not --remotes=origin
+
     w = whatchanged --graph --abbrev-commit --date=relative --all
     amend = commit --amend -C HEAD
-    # unstage = reset HEAD
-    # uncommit = reset HEAD^
+    unstage = reset HEAD
+    uncommit = reset HEAD^
 
 [log]
 	decorate = true
@@ -34,19 +42,19 @@
 [merge]
 	tool = gvimdiff
 
-[difftool "gvimdiff"]
-	path = /usr/local/bin/mvimdiff
-
 [mergetool "gvimdiff"]
 	path = /usr/local/bin/mvimdiff
-
-[diff]
-	tool = gvimdiff
-
-[difftool "sourcetree"]
-	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
-	path = 
 
 [mergetool "sourcetree"]
 	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
 	trustExitCode = true
+
+[diff]
+	tool = gvimdiff
+
+[difftool "gvimdiff"]
+	path = /usr/local/bin/mvimdiff
+
+[difftool "sourcetree"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path = 

@@ -1,0 +1,39 @@
+{
+	"auto_upgrade_last_run": 1348932648,
+	"installed_packages":
+	[
+		"Alignment",
+		"AngularJS",
+		"BracketHighlighter",
+		"Dotfiles Syntax Highlighting",
+		"FileDiffs",
+		"FuzzyFileNav",
+		"Git",
+		"HTML5",
+		"Jinja2",
+		"jQuery",
+		"Nettuts+ Fetch",
+		"Package Control",
+		"Python Flake8 Lint",
+		"PythonTidy",
+		"SideBarEnhancements",
+		"SideBarGit",
+		"SublimeBlockCursor",
+		"SublimeCodeIntel",
+		"SublimeLinter",
+		"SublimeREPL",
+		"Tag",
+		"Terminal",
+		"Theme - Nil",
+		"Theme - Soda",
+		"Tomorrow Color Schemes",
+		"Twitter Bootstrap Snippets",
+		"Vintage Numbers",
+		"VintageEx",
+		"WordHighlight"
+	],
+	"repositories":
+	[
+		"https://github.com/facelessuser/FuzzyFileNav"
+	]
+}

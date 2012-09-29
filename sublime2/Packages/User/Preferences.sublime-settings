@@ -1,0 +1,67 @@
+{
+    "build_systems":
+    [
+        {
+            "name": "Run Tests",
+            // activate the specific virtualenv for the project
+            "cmd": ["source", "/path/to/your/virtualenv/bin/activate"],
+            // now indicates a different folder to run the next cmd
+            "working_dir": "/path/to/to/you/django_project",
+            // runs the test
+            "cmd": ["python", "manage.py", "test"]
+        }
+    ],
+
+	"close_windows_when_empty": false,
+	"color_scheme": "Packages/Tomorrow Color Schemes/Tomorrow-Night-Bright.tmTheme",
+
+	// Do not try to detect the tab size from the opened file
+	"detect_indentation" : false,
+
+	"file_exclude_patterns":
+	[
+		".*",
+		"*.pyc",
+		"*.pyo",
+		"*.exe",
+		"*.dll",
+		"*.obj",
+		"*.o",
+		"*.a",
+		"*.lib",
+		"*.so",
+		"*.dylib",
+		"*.ncb",
+		"*.sdf",
+		"*.suo",
+		"*.pdb",
+		"*.idb",
+		".DS_Store",
+		"*.class",
+		"*.psd",
+		"*.db"
+	],
+	"folder_exclude_patterns":
+	[
+		".svn",
+		".git",
+		".hg",
+		"CVS",
+		"_build",
+		"dist",
+		"build",
+		"site"
+	],
+	// "font_face": "Ubuntu Mono",
+	"font_face" : "Source Code Pro",
+	"font_size": 13.0,
+	"highlight_line": true,
+	"highlight_modified_tabs": true,
+	"ignored_packages":
+	[
+	],
+	"tab_size": 4,
+	"theme": "Nil.sublime-theme",
+	"translate_tabs_to_spaces": true,
+	"trim_trailing_white_space_on_save": true
+}

@@ -11,7 +11,8 @@ call vundle#rc()
 Bundle 'gmarik/vundle'
 
 Bundle 'vim-scripts/L9'
-Bundle 'seletskiy/FuzzyFinder'
+" Bundle 'seletskiy/FuzzyFinder'
+Bundle 'kien/ctrlp.vim'
 Bundle 'Lokaltog/vim-powerline'
 Bundle 'tpope/vim-fugitive'
 Bundle 'tpope/vim-git'
@@ -21,38 +22,43 @@ Bundle 'tomtom/tcomment_vim'
 Bundle 'scrooloose/syntastic'
 Bundle 'scrooloose/nerdtree'
 Bundle 'sjl/gundo.vim'
+Bundle 'Shougo/neocomplcache'
 Bundle 'mileszs/ack.vim'
 Bundle 'tsaleh/vim-matchit'
-Bundle 'groenewege/vim-less'
-" Bundle 'kshenoy/vim-signature'
-
-Bundle 'vim-scripts/TabBar'
-Bundle 'kien/ctrlp.vim'
-Bundle 'tyru/current-func-info.vim'
 Bundle 'othree/html5.vim'
-Bundle 'Shougo/neocomplcache'
-Bundle 'kien/rainbow_parentheses.vim'
+Bundle 'groenewege/vim-less'
+Bundle 'kshenoy/vim-signature'
+Bundle 'vim-scripts/TabBar'
 Bundle 'godlygeek/tabular'
 Bundle 'majutsushi/tagbar'
-Bundle 'Lokaltog/vim-easymotion'
+Bundle 'vim-scripts/bufkill.vim'
+Bundle 'vim-scripts/EasyGrep'
 
 " Python
 Bundle 'nvie/vim-flake8'
 Bundle 'alfredodeza/pytest.vim'
 Bundle 'lambdalisue/nose.vim'
 Bundle 'jmcantrell/vim-virtualenv'
+" Bundle 'lepture/vim-jinja'
+Bundle 'beyondwords/vim-jinja2'
 "Bundle 'klen/python-mode'
 
 "Colorschemes
 Bundle 'vim-scripts/Wombat'
 Bundle 'altercation/vim-colors-solarized'
 Bundle 'tomasr/molokai'
+Bundle 'vim-scripts/obsidian2.vim'
 
 " Misc
+Bundle 'Lokaltog/vim-easymotion'
 Bundle 'tetsuo13/Vim-log4j'
 Bundle 'reinh/vim-makegreen'
 Bundle 'xolox/vim-misc'
 Bundle 'jistr/vim-nerdtree-tabs'
+Bundle 'tyru/current-func-info.vim'
+Bundle 'kien/rainbow_parentheses.vim'
+Bundle 'vim-scripts/BufOnly.vim'
+
 
 "Bundle 'shougo/neocomplcache'
 
@@ -60,8 +66,8 @@ Bundle 'jistr/vim-nerdtree-tabs'
 if has("gui_running")
 	colorscheme wombat
     set guitablabel=%M%t
-    set lines=40
-    set columns=115
+    " set lines=40
+    " set columns=115
 
     if has("gui_gnome")
         set term=gnome-256color
@@ -145,8 +151,8 @@ set nowrapscan "Turn off search wrapping
 set sessionoptions=buffers,tabpages,curdir
 "set tags+=C:\Python26\tags
 
-set wildignore+=*/tmp/*,*.so,*.swp,*.zip  " MacOSX/Linux
-set wildignore+=tmp\*,*.swp,*.zip,*.exe   " Windows
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc  " MacOSX/Linux
+set wildignore+=tmp\*,*.swp,*.zip,*.exe,*.pyc   " Windows
 
 set nocompatible " choose no compatibility with legacy vi
 syntax enable
@@ -160,7 +166,7 @@ set go-=T "Hide toolbar
 " set go-=r "Hide scrollbar
 set number
 set cursorline
-set lines=60 columns=120
+" set lines=60 columns=120
 "winpos 1920 0
 set laststatus=2 "always show status line
 set noerrorbells
@@ -219,9 +225,8 @@ autocmd BufWritePre * let &bex = '-' . strftime("%Y%m%d-%H%M%S") . '.vimbackup'
 " autocmd BufEnter * set path=**
 
 " Reload vim config when saved
-autocmd! BufWritePost .vimrc source $MYVIMRC
-autocmd! BufWritePost vimrc source $MYVIMRC
-autocmd! BufWritePost _vimrc_custom source $MYVIMRC
+" autocmd BufWritePost $MYVIMRC,.vimrc nested :source $MYVIMRC
+autocmd BufWritePost $MYVIMRC nested :source $MYVIMRC
 
 " Swap ` with ' to jump to column position as well when using '
 nnoremap ' `
@@ -284,15 +289,16 @@ nnoremap <expr> gp '`[' . strpart(getregtype(), 0, 1) . '`]'
 "highlight WhitespaceEOL ctermbg=red guibg=red
 "match WhitespaceEOL /\s\+$/
 
-" Removes trailing spaces
-function! TrimWhiteSpace()
-  %s/\s*$//
-  ''
-:endfunction
 
 " Map the F2 key to the clean white space command
-map <F2> :call TrimWhiteSpace()<CR>
-map! <F2> :call TrimWhiteSpace()<CR>
+" map <F2> :call TrimWhiteSpace()<CR>
+" map! <F2> :call TrimWhiteSpace()<CR>
+
+" Removes trailing spaces
+" function! TrimWhiteSpace()
+  " %s/\s*$//
+  " ''
+" endfunction
 
 " If you want, you can have whitespace cleaned up automatically on write
 " Uncomment to enable white space removal on write
@@ -323,6 +329,7 @@ autocmd BufWritePre *.py :%s/\s\+$//e " Remove trailing whitespace on save
 autocmd BufRead *.py set efm=%C\ %.%#,%A\ \ File\ \"%f\"\\,\ line\ %l%.%#,%Z%[%^\ ]%\\@=%m
 " autocmd FileType python map <f5> :w\|!python -i %<cr>
 autocmd FileType python map <f5> :w\|!ipython -nobanner %<cr>
+" map <leader>dt :set makeprg=python\ manage.py\ test\|:call MakeGreen()<CR>
 
 " PySmell
 "autocmd FileType python setlocal omnifunc=pysmell#Complete
@@ -331,7 +338,11 @@ autocmd FileType python map <f5> :w\|!ipython -nobanner %<cr>
 " to update stdlib run: pysmell C:\Python25 -x test -o PYSMELLTAGS.stdlib
 
 " Javascript / jQuery
-au BufRead,BufNewFile jquery.*.js set ft=javascript syntax=jquery
+autocmd BufRead,BufNewFile jquery.*.js set ft=javascript syntax=jquery
+
+" Fix syntax highlight (possible slowness for large files)
+" http://vim.wikia.com/wiki/Fix_syntax_highlighting
+autocmd BufEnter * :syntax sync fromstart
 
 
 """""""""""""""""""""""""""""""""
@@ -420,48 +431,30 @@ let Tlist_WinWidth = 40
 
 
 " FuzzyFinder
-map <leader>fb :FufBuffer<CR>
-" map <leader>fbr :FufBuffer<CR>
-" map <leader>fbm :FufBookmarkDir<CR>
-map <leader>ff :FufFile<CR>
-map <leader>fs :FufFile **/<CR>
-map <leader>fd :FufDir<CR>
-" map <leader>fdr :FufDir **/<CR>
-map <leader>fr :FufMruFile<CR>
-map <leader>ft :FufTag<CR>
-map <leader>fj :FufJumpList<CR>
-map <leader>fq :FufQuickfix<CR>
-map <leader>fc :FufChangeList<CR>
-map <leader>fl :FufLine<CR>
-map <leader>fm :FufBookmarkDir<CR>
+" map <leader>fb :FufBuffer<CR>
+" map <leader>ff :FufFile<CR>
+" map <leader>fs :FufFile **/<CR>
+" map <leader>fd :FufDir<CR>
+" map <leader>fr :FufMruFile<CR>
+" map <leader>ft :FufBufferTag<CR>
+" map <leader>fj :FufJumpList<CR>
+" map <leader>fq :FufQuickfix<CR>
+" map <leader>fc :FufChangeList<CR>
+" map <leader>fl :FufLine<CR>
+" map <leader>fm :FufBookmarkDir<CR>
 let g:fuf_modesDisable = ['mrucmd']
 let g:fuf_mrufile_maxItem = 100
 let g:fuf_file_exclude = '\v\~$|\.(o|exe|dll|bak|swp|pyc)$|(^|[/\\])\.(hg|git|bzr)($|[/\\])'
 let g:fuf_coveragefile_exclude = '\v\~$|\.(o|exe|dll|bak|swp|pyc)$|(^|[/\\])\.(hg|git|bzr)($|[/\\])'
 let g:fuf_mrufile_exclude = '\v\~$|\.(o|exe|dll|bak|orig|sw[po])$|^(\/\/|\\\\|\/mnt\/|\/media\/|H:|P:|S:)'
-" FuzzyFinderTextMate
-" map <leader>ft :FuzzyFinderTextMate<CR>
-
-" FuzzyFinder keybindings 
-" and then use ctrl+f to open files and ctrl+b to open buffers
-" function! OpenFile() 
-"     if stridx(bufname("%"),"NERD_tree") >= 0 
-"        :wincmd w 
-"     endif 
-"     :FufFile 
-" endfunction 
-" noremap <silent> <C-f> :call OpenFile()<CR>
-" function! OpenBuffer() 
-"     if stridx(bufname("%"),"NERD_tree") >= 0 
-"        :wincmd w 
-"     endif 
-"     :FufBuffer 
-" endfunction 
-" noremap <silent> <C-b> :call OpenBuffer()<CR>
-
 
 " CtrlP
-map <leader>b :CtrlPBuffer<CR>
+map <leader>ff :CtrlP<CR>
+map <leader>fb :CtrlPBuffer<CR>
+map <leader>fr :CtrlPMRUFiles<CR>
+map <leader>ft :CtrlPBufTag<CR>
+map <leader>fq :CtrlPQuickfix<CR>
+let g:ctrlp_match_window_reversed = 0
 " let g:ctrlp_custom_ignore = '\.git$\|\.hg$\|\.svn$'
 " let g:ctrlp_custom_ignore = {
 "   \ 'dir':  '\.git$\|\.hg$\|\.svn$',
@@ -473,6 +466,8 @@ map <leader>b :CtrlPBuffer<CR>
 map <leader>cc :TComment<CR>
 call tcomment#DefineType('jinja', '{# %s #}')
 call tcomment#DefineType('jinja_block', '{%% comment %%}%s{%% endcomment %%}\n')
+call tcomment#DefineType('htmljinja', '{# %s #}')
+call tcomment#DefineType('htmljinja_block', '{%% comment %%}%s{%% endcomment %%}\n')
 call tcomment#DefineType('gitconfig', '# %s')
 
 " Fugutive (Git)
@@ -492,13 +487,15 @@ let g:pyflakes_use_quickfix = 0
 " Powerline
 " let g:Powerline_symbols = 'fancy'
 let g:Powerline_colorscheme = 'custom'
-" let g:Powerline_symbols = 'fancy'
-let g:Powerline_symbols = 'compatible'
+let g:Powerline_symbols = 'fancy'
+" let g:Powerline_symbols = 'compatible'
 
 " Syntastic
 let g:syntastic_check_on_open=1
 let g:syntastic_echo_current_error=1
 let g:syntastic_enable_signs=1
+let g:syntastic_error_symbol='✗'
+let g:syntastic_warning_symbol='⚠'
 let g:syntastic_stl_format = '[%E{Err: %fe #%e}%B{, }%W{Warn: %fw #%w}]'
 let g:syntastic_python_checker_args='--ignore=E501' " Flake8 ignores
 
@@ -550,7 +547,7 @@ map <leader>ntf :NERDTreeFind<CR>
 " EasyGrep
 """let g:EasyGrepFileAssociations='C:/Program Files/Vim/vimfiles/plugin/EasyGrepFileAssociations'
 let g:EasyGrepMode=0
-let g:EasyGrepCommand=0
+let g:EasyGrepCommand=1
 let g:EasyGrepRecursive=1
 let g:EasyGrepIgnoreCase=1
 let g:EasyGrepHidden=0
@@ -869,7 +866,8 @@ function! s:SelectHTML()
     while n < 50 && n < line("$")
         " check for jinja
         if getline(n) =~ '{%\s*\(extends\|block\|macro\|set\|if\|for\|include\|trans\)\>'
-            set ft=jinja
+            " set ft=jinja
+            set ft=htmljinja
             return
         endif
 
@@ -892,3 +890,4 @@ function! s:SelectHTML()
     set ft=html
 endfunction
 autocmd BufNewFile,BufRead *.html,*.htm  call s:SelectHTML()
+

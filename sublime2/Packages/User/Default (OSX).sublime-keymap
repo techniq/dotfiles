@@ -1,0 +1,4 @@
+[
+    { "keys": ["super+o"], "command": "fuzzy_start_from_file" },
+    { "keys": ["super+shift+o"], "command": "fuzzy_bookmarks_load" }
+]
