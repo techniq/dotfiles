@@ -3,3 +3,19 @@
 -exit()
 -import flask
 -quit()
+-from application import models
+-import application
+-pwd
+-import sys
+-print sys.print
+-print sys.path
+-from application import models
+-import application
+-from application import models
+-from application import models
+-from application import models
+-import lettuce
+-import flask
+-import application
+-from application import models
+-from application import models

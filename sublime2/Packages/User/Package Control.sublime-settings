@@ -1,9 +1,10 @@
 {
-	"auto_upgrade_last_run": 1348932648,
+	"auto_upgrade_last_run": 1348944598,
 	"installed_packages":
 	[
 		"Alignment",
 		"AngularJS",
+		"AutoFileName",
 		"BracketHighlighter",
 		"Dotfiles Syntax Highlighting",
 		"FileDiffs",
@@ -13,11 +14,13 @@
 		"Jinja2",
 		"jQuery",
 		"Nettuts+ Fetch",
+		"Open Recent Files",
 		"Package Control",
 		"Python Flake8 Lint",
 		"PythonTidy",
 		"SideBarEnhancements",
 		"SideBarGit",
+		"Sublime Files",
 		"SublimeBlockCursor",
 		"SublimeCodeIntel",
 		"SublimeLinter",
