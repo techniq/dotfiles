@@ -1,6 +1,6 @@
 {
     // Outline? (solid|outline|underline|none)
-    "quote_style" : "underline",
+    "quote_style" : "none",
     "curly_style" : "outline",
     "round_style" : "outline",
     "square_style": "outline",

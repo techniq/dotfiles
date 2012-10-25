@@ -3,18 +3,29 @@
 	email = techniq35@gmail.com
 
 [core]
+    editor = subl
 	excludesfile = ~/.gitignore
 	autocrlf = input
     # whitespace = cr-at-eol
 
 [branch]
+    # http://stevenharman.net/git-pull-with-automatic-rebase
 	autosetuprebase = always
+
+[push]
+    # http://pivotallabs.com/users/alex/blog/articles/883-git-config-push-default-matching
+	default = matching
 
 [color]
 	ui = true
 
 [alias]
     st = status -sb
+    co = checkout
+    d = diff
+    dc = diff --cached
+    dn = diff --name-status
+
 	l = log
 	lg = log --graph
     lga = !git lg --all
@@ -32,6 +43,20 @@
     amend = commit --amend -C HEAD
     unstage = reset HEAD
     uncommit = reset HEAD^
+	ignored = ls-files -o -i --exclude-standard
+
+    # show list of contributors in descending order by number of commits
+    rank = shortlog -sn --no-merges
+
+    # Search for a given string in all patches and print commit messages
+	# example: search for any commit that adds or removes string "foobar"
+	#     git searchcommits foobar
+	# example: search commits for string "foobar" in directory src/lib
+	#     git searchcommits foobar src/lib
+	# example: search commits for "foobar", print full diff of commit with 1 line context
+	#     git searchcommits foobar --pickaxe-all -U1 src/lib
+	searchcommits = "!f() { query=\"$1\"; shift; git log -S\"$query\" \"$@\"; }; f \"$@\""
+    
 
 [log]
 	decorate = true

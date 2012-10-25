@@ -1,5 +1,5 @@
 {
-	"auto_upgrade_last_run": 1348944598,
+	"auto_upgrade_last_run": 1351100529,
 	"installed_packages":
 	[
 		"Alignment",
@@ -8,11 +8,14 @@
 		"BracketHighlighter",
 		"Dotfiles Syntax Highlighting",
 		"FileDiffs",
+		"Format SQL",
 		"FuzzyFileNav",
 		"Git",
 		"HTML5",
 		"Jinja2",
 		"jQuery",
+		"JsFormat",
+		"Log4j-Sublime",
 		"Nettuts+ Fetch",
 		"Open Recent Files",
 		"Package Control",
@@ -25,6 +28,9 @@
 		"SublimeCodeIntel",
 		"SublimeLinter",
 		"SublimeREPL",
+		"SublimeRope",
+		"Sundried Color Scheme",
+		"Surround",
 		"Tag",
 		"Terminal",
 		"Theme - Nil",
@@ -32,11 +38,13 @@
 		"Tomorrow Color Schemes",
 		"Twitter Bootstrap Snippets",
 		"Vintage Numbers",
+		"Vintage Surround",
 		"VintageEx",
 		"WordHighlight"
 	],
 	"repositories":
 	[
-		"https://github.com/facelessuser/FuzzyFileNav"
+		"https://github.com/facelessuser/FuzzyFileNav",
+		"https://github.com/scarrillo/Log4j-Sublime"
 	]
 }

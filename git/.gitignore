@@ -1,8 +1,10 @@
 ### Generic files to ignore ###
 *~
+*.swp
+*.tmp
+
 *.lock
 *.DS_Store
-*.swp
 *.out
 
 ### Python ###
